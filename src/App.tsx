@@ -7,19 +7,15 @@ import Board from "./components/board/Board";
 import Cursor from "./components/cursor/Cursor";
 
 import mousePositionService from "./services/mousePositionService";
-import {filter, fromEvent } from "rxjs";
 import toolboxService from "./services/toolboxService";
+import keyboardService from "./services/keyboardService";
 
 function App() {
     const appRoot = useRef(null);
 
     useEffect(() => {
         mousePositionService.fromNode(appRoot.current!);
-        fromEvent(document, 'keydown', e => e as KeyboardEvent)
-            .pipe(filter(e => e.key === 'Escape'))
-            .subscribe(_ => {
-                toolboxService.setTool(undefined);
-            });
+        keyboardService.escape().subscribe(_ => toolboxService.setTool(undefined));
     }, [])
 
 
