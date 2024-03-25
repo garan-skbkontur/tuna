@@ -1,9 +1,9 @@
 import {useEffect, useState} from "react";
-import nodesService from "../../services/nodesService";
-import Layer from "./Layer";
+import nodesService from "../../services/structureService";
+import StructureElement from "./StructureElement";
 import {DescribedNode} from "../../services/describedNode";
 
-export default function Layers() {
+export default function Structure() {
     const [nodes, setNodes] = useState<DescribedNode[]>([]);
 
     useEffect(() => {
@@ -13,12 +13,11 @@ export default function Layers() {
         });
     }, []);
 
-
     return (
         <>
             {nodes.map((node, index) =>
-                <Layer key={`${node.name}_${index}`}
-                       node={node} />)}
+                <StructureElement key={`${node.name}_${index}`}
+                                  node={node} />)}
         </>
     );
 }

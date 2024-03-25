@@ -1,7 +1,7 @@
 import {BehaviorSubject, Observable} from "rxjs";
 import {DescribedNode} from "./describedNode";
 
-export class NodesService {
+export class StructureService {
     private _nodes: BehaviorSubject<DescribedNode[]>;
     public nodes$: Observable<DescribedNode[]>;
 
@@ -15,6 +15,16 @@ export class NodesService {
         x.push(node);
         this._nodes.next([...x]);
     }
+
+    appendTo(target: HTMLElement, node: DescribedNode) {
+        const storedTarget = this._nodes
+            .getValue()
+            .filter(n => n.node === target)[0];
+        if (!storedTarget) {
+            throw new Error('Target element was not found');
+        }
+        storedTarget.children.push(node);
+    }
 }
 
-export default new NodesService();
+export default new StructureService();

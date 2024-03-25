@@ -1,5 +1,5 @@
 import './Properties.scss';
-import Layers from "../layers/Layers";
+import Structure from "../structure/Structure";
 
 export default function Properties() {
     return (
@@ -12,9 +12,9 @@ export default function Properties() {
             <div className="settings-layers-divider"></div>
             <div className="layers">
                 <div className="property-settings">
-                    <p className="property-settings__title">layers</p>
+                    <p className="property-settings__title">Structure</p>
                     <div className="property-settings__body">
-                        <Layers />
+                        <Structure />
                     </div>
                 </div>
             </div>

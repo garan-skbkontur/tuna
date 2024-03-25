@@ -1,7 +1,8 @@
 import './Board.scss'
 import toolboxService, {Tool} from "../../services/toolboxService";
-import nodesService from "../../services/nodesService";
+import nodesService from "../../services/structureService";
 import {DescribedNode} from "../../services/describedNode";
+import {useRef} from "react";
 
 interface InnerMouseEvent {
     target: EventTarget | null,
@@ -9,8 +10,10 @@ interface InnerMouseEvent {
 }
 
 export default function Board() {
+    const canvas = useRef(null);
     let tool: Tool | undefined;
     let fooBarIndex = 1;
+
     toolboxService.selectedTool$.subscribe((selectedTool) => {
         tool = selectedTool;
     });
@@ -46,7 +49,12 @@ export default function Board() {
             target.appendChild(node);
             toolboxService.setTool(undefined);
             unselectElement(target);
-            nodesService.push(new DescribedNode(node));
+            if (target === canvas.current!) {
+                nodesService.push(new DescribedNode(node));
+            }
+            else {
+                nodesService.appendTo(target, new DescribedNode(node))
+            }
             return;
         }
     }
@@ -54,6 +62,7 @@ export default function Board() {
     return (
         <div className="board">
             <div className="board__canvas"
+                 ref={canvas}
                  onClick={handleClickInner}
                  onMouseOver={handleMouseOver}
                  onMouseOut={handleMouseOut}></div>
