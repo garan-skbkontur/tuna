@@ -15,7 +15,10 @@ function App() {
 
     useEffect(() => {
         mousePositionService.fromNode(appRoot.current!);
-        keyboardService.escape().subscribe(_ => toolboxService.setTool(undefined));
+        keyboardService
+            .attachTo(document.body)
+            .escape()
+            .subscribe(_ => toolboxService.setTool(undefined));
     }, [])
 
 

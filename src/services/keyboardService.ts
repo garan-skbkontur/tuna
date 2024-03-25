@@ -18,7 +18,7 @@ export class KeyboardService {
     }
 
     attachTo(node: HTMLElement): KeyboardService {
-        fromEvent(document, 'keydown', KeyboardService.Convert)
+        fromEvent(node, 'keydown', KeyboardService.Convert)
             .subscribe(keyboardEvent => {
                 this._subject.next(keyboardEvent);
             });
